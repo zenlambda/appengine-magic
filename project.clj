@@ -1,11 +1,13 @@
+(def appengine-sdk-version "1.9.21")
+
 (defproject appengine-magic "0.5.1-SNAPSHOT"
   :description "Google App Engine library for Clojure."
-  :url "https://github.com/gcv/cupboard"
+  :url "https://github.com/gcv/appengine-magic"
   :min-lein-version "2.0.0"
   :repositories {"releases" "http://appengine-magic-mvn.googlecode.com/svn/releases/"
                  "snapshots" "http://appengine-magic-mvn.googlecode.com/svn/snapshots/"}
   :exclusions [org.clojure/clojure]
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [ring/ring-core "1.1.0"]
                  [org.apache.commons/commons-exec "1.1"]
                  ;; App Engine supporting essentials
@@ -20,12 +22,12 @@
                  [taglibs/standard "1.1.2"] ; repackaged-appengine-jakarta-standard-1.1.2.jar
                  [commons-el "1.0"]
                  ;; main App Engine libraries
-                 [com.google.appengine/appengine-api-1.0-sdk "1.7.4"]
-                 [com.google.appengine/appengine-api-labs "1.7.4"]
-                 [com.google.appengine/appengine-api-stubs "1.7.4"]
-                 [com.google.appengine/appengine-local-runtime "1.7.4"]
-                 [com.google.appengine/appengine-local-runtime-shared "1.7.4"]
-                 [com.google.appengine/appengine-testing "1.7.4"]
-                 [com.google.appengine/appengine-tools-api "1.7.4"]
+                 [com.google.appengine/appengine-api-1.0-sdk ~appengine-sdk-version]
+                 [com.google.appengine/appengine-api-labs ~appengine-sdk-version]
+                 [com.google.appengine/appengine-api-stubs ~appengine-sdk-version]
+                 [com.google.appengine/appengine-local-runtime ~appengine-sdk-version]
+                 [com.google.appengine/appengine-local-runtime-shared ~appengine-sdk-version]
+                 [com.google.appengine/appengine-testing ~appengine-sdk-version]
+                 [com.google.appengine/appengine-tools-api ~appengine-sdk-version]
                  ;; for the Leiningen plugin
                  [me.raynes/fs "1.4.5"]])

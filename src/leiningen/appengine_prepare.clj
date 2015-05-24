@@ -9,12 +9,17 @@
             [clojure.string :as string])
   (:import java.io.File))
 
-(defn- copy-to-dir [file dir]
+(defn- copy-to-dir [file dir & {:keys [filt] :or {filt identity}}]
   (let [dir (if (isa? (type dir) File) dir (File. dir))
         file-path (if (isa? (type file) File) (.getPath file) file)
         dest-file (File. dir (fs/base-name file))]
-    (println "Copying" file-path "to" (.getPath dir))
-    (fs/copy file dest-file)))
+    (if (filt file) (do
+      (println "Copying" file-path "to" (.getPath dir))
+      (fs/copy file dest-file)))))
+
+(defn- jar-pattern [name]
+  (let [name-grp (format "(%s)" name)]
+    (re-pattern (str #".*" name-grp #"-(\d+)(?:\.(\d+))?(?:\.(\d+))?.jar"))))
 
 (defn appengine-prepare [project]
   (let [project (lein-project/set-profiles project (dissoc (:profiles project) :dev) [:dev])
@@ -55,7 +60,15 @@
           (copy-to-dir jar-file target-lib-dir))
         ;; copy important dependencies into WEB-INF/lib
         (doseq [dep dependencies]
-          (copy-to-dir dep target-lib-dir))
+          (copy-to-dir dep target-lib-dir
+            :filt (fn [x] (not
+              (or
+                (re-matches (jar-pattern "appengine-local-runtime")  (.getPath x))
+                (re-matches (jar-pattern "appengine-local-runtime-shared")  (.getPath x))
+                (re-matches (jar-pattern "appengine-tools-api")  (.getPath x))
+                (re-matches (jar-pattern "appengine-api-stubs")  (.getPath x))
+                (re-matches (jar-pattern "appengine-testing")  (.getPath x))
+                )))))
       )
 
     ;; Projects which do not normally use AOT may need some cleanup. This should

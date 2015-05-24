@@ -8,3 +8,5 @@
 /lib
 /target
 pom.xml
+
+.lein-repl-history
