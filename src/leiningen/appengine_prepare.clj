@@ -63,11 +63,11 @@
           (copy-to-dir dep target-lib-dir
             :filt (fn [x] (not
               (or
-                (re-matches (jar-pattern "appengine-local-runtime")  (.getPath x))
-                (re-matches (jar-pattern "appengine-local-runtime-shared")  (.getPath x))
-                (re-matches (jar-pattern "appengine-tools-api")  (.getPath x))
-                (re-matches (jar-pattern "appengine-api-stubs")  (.getPath x))
-                (re-matches (jar-pattern "appengine-testing")  (.getPath x))
+                (re-matches (jar-pattern "appengine-local-runtime") (.getPath x))
+                (re-matches (jar-pattern "appengine-local-runtime-shared") (.getPath x))
+                (re-matches (jar-pattern "appengine-tools-api") (.getPath x))
+                (re-matches (jar-pattern "appengine-api-stubs") (.getPath x))
+                (re-matches (jar-pattern "appengine-testing") (.getPath x))
                 )))))
       )
 
